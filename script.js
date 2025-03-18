@@ -1,26 +1,35 @@
-//your JS code here. If required.
-let form = document.querySelector('form')
-let usernameBox = document.querySelector('#username')
-let passwordBox = document.querySelector('#password')
-let checkbox = document.querySelector('#checkbox')
-let btn = document.querySelector('#submit')
-let existingbtn = document.querySelector('#existing')
+document.addEventListener("DOMContentLoaded", () => {
+    let usernameInput = document.getElementById("username")
+    let passwordInput = document.getElementById("password")
+    let checkbox = document.getElementById("checkbox")
+    let submitButton = document.getElementById("submit")
+    let existingButton = document.getElementById("existing")
 
-btn.addEventListener('click', (e)=>{
-    e.preventDefault()
-    let username = usernameBox.value
-    let password = passwordBox.value
-    checkbox.addEventListener('click', ()=>{
-        let check = checkbox.checked
-        if(check){
-            localStorage.setItem('username', JSON.stringify(username))
-            localStorage.setItem('passowrd', JSON.stringify(password))
+    // Check localStorage for saved credentials
+    let savedUsername = localStorage.getItem("username")
+    let savedPassword = localStorage.getItem("password")
+
+    if (savedUsername) {
+        existingButton.style.display = "block"
+    }
+
+    submitButton.addEventListener("click", (e) => {
+        e.preventDefault()
+        let username = usernameInput.value
+        let password = passwordInput.value
+        alert(`Logged in as ${username}`);
+
+        if (checkbox.checked) {
+            localStorage.setItem("username", username)
+            localStorage.setItem("password", password)
         }
-        alert(`Logged in as ${username}`)
-        else{
-            localStorage.removeItem('username')
-            localStorage.removeItem('passowrd')
+        else {
+            localStorage.removeItem("username")
+            localStorage.removeItem("password")
         }
+        location.reload()
+    })
+    existingButton.addEventListener("click", () => {
+        alert(`Logged in as ${savedUsername}`)
     })
 })
-
